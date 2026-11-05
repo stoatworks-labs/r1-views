@@ -1,0 +1,4 @@
+*.dbpr
+*.dbpr-journal
+*.png
+__pycache__/
