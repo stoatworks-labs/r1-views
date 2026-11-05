@@ -135,3 +135,7 @@ The tests build pages from a synthetic project (`test/fixture.ts`; no real proje
 check them with both checkers. They need Python 3 for the parity tests, and the installed R1 for
 the catalogue check, which is skipped without it. Real projects never go in git, but you can
 run the tests on your own: list them in `R1_REAL_PROJECTS`, separated by colons. They're only read.
+
+<!-- attributions:start -->
+This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
+<!-- attributions:end -->

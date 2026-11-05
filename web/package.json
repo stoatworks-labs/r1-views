@@ -9,7 +9,6 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "cli": "node --experimental-strip-types src/cli.ts",
     "deploy": "npm run build && cf-run npx wrangler@4.116.0 deploy"
   },
   "dependencies": {

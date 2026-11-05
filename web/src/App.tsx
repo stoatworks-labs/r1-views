@@ -116,6 +116,7 @@ export default function App() {
         <h1>R1 Layout Builder</h1>
         <span className="tag">Remote views for d&amp;b R1 projects, built in your browser. Your project never leaves it.</span>
         <span className="ver">{__APP_VERSION__}</span>
+        <button type="button" className="small" data-stoatworks-about>About</button>
       </header>
 
       {!file && <Drop onFile={open} ready={!!SQL} />}
