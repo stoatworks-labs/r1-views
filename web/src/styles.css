@@ -1,26 +1,38 @@
+/* Colours come from the shared Stoatworks theme (stoatworks-theme.css, imported first),
+   so the page follows the system's light or dark setting like every fleet tool. The R1
+   view previews keep R1's own dark colours: they are pictures of what R1 will draw. */
 :root {
-  --bg: #12151a;
-  --panel: #1a1f27;
-  --panel-2: #212836;
-  --line: #2c3543;
-  --text: #dfe6f0;
-  --dim: #8b98ab;
-  --accent: #5fb0d8;
-  --ok: #4ec98a;
-  --warn: #e0b050;
-  --bad: #e0685f;
-  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  color-scheme: dark;
+  --bg: var(--sw-paper);
+  --panel: var(--sw-card);
+  --panel-2: var(--sw-tint);
+  --line: var(--sw-line);
+  --text: var(--sw-ink);
+  --dim: var(--sw-muted);
+  --accent: var(--sw-accent);
+  --ok: var(--sw-ok);
+  --warn: var(--sw-warn);
+  --bad: var(--sw-bad);
+  --mono: var(--sw-mono);
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-.app { max-width: 1800px; margin: 0 auto; padding: 16px 20px 64px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 var(--sw-font); }
+.app { max-width: 1800px; margin: 0 auto; padding: 0 20px 64px; }
 
-header.top { display: flex; align-items: baseline; gap: 16px; padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
-header.top h1 { font-size: 19px; margin: 0; font-weight: 620; letter-spacing: -0.01em; }
-header.top .tag { color: var(--dim); font-size: 13px; }
-header.top .ver { margin-left: auto; color: var(--dim); font-size: 12px; font-family: var(--mono); }
+/* The navy bar runs the full width of the window while its contents stay on the
+   page's column: border-image paints past the box without widening the page. */
+header.top {
+  gap: 16px; padding: 10px 0; margin-bottom: 16px;
+  border-image: linear-gradient(var(--sw-navy), var(--sw-navy)) fill 0 / 0 / 0 100vmax;
+}
+header.top .tag { color: var(--sw-navy-ink-2); font-size: 13px; }
+header.top .ver { margin-left: auto; color: var(--sw-navy-ink-2); font-size: 12px; font-family: var(--mono); }
+/* The bare button rule below would otherwise beat the theme's bar buttons. */
+header.top button {
+  background: transparent; color: var(--sw-navy-ink); border-color: var(--sw-navy-line);
+  padding: 4px 12px; font-size: 0.9rem;
+}
+header.top button:hover { border-color: var(--sw-accent-soft); }
 
 h2 { font-size: 16px; margin: 0 0 6px; font-weight: 600; }
 h3 { font-size: 14px; margin: 0 0 6px; font-weight: 600; }
@@ -31,8 +43,14 @@ p { margin: 6px 0; }
 .ok { color: var(--ok); }
 .bad { color: var(--bad); }
 .warn { color: var(--warn); font-size: 12px; }
-.error { color: var(--bad); background: #2a1717; border: 1px solid #5a2a2a; padding: 8px 12px; border-radius: 6px; }
-.note { background: #2a2416; border: 1px solid #5a4a24; color: #e8d6a8; padding: 8px 12px; border-radius: 6px; font-size: 13px; }
+.error {
+  color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--bad) 40%, var(--line)); padding: 8px 12px; border-radius: var(--sw-radius-sm);
+}
+.note {
+  background: color-mix(in srgb, var(--warn) 9%, var(--panel)); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line));
+  color: var(--text); padding: 8px 12px; border-radius: var(--sw-radius-sm); font-size: 13px;
+}
 .grow { flex: 1; }
 .row { display: flex; gap: 10px; align-items: center; }
 .row.wrap { flex-wrap: wrap; align-items: flex-end; }
@@ -40,44 +58,48 @@ p { margin: 6px 0; }
 
 button, .button, select, input { font: inherit; color: var(--text); }
 button, .button {
-  background: var(--panel-2); border: 1px solid var(--line); padding: 5px 12px; border-radius: 6px;
+  background: var(--panel); border: 1px solid var(--line); padding: 5px 12px; border-radius: var(--sw-radius-sm);
   cursor: pointer; font-size: 13px; text-decoration: none; display: inline-block;
 }
 button:hover:not(:disabled), .button:hover { border-color: var(--accent); }
 button:disabled { opacity: 0.45; cursor: default; }
 button.small { padding: 2px 8px; font-size: 12px; }
-button.primary, .button.primary { background: var(--accent); border-color: var(--accent); color: #0d1117; font-weight: 600; padding: 8px 16px; }
-button.danger { border-color: #5a2a2a; color: #f0a8a0; }
+button.primary, .button.primary { background: var(--accent); border-color: var(--accent); color: var(--sw-on-accent); font-weight: 600; padding: 8px 16px; }
+button.primary:hover:not(:disabled), .button.primary:hover { filter: brightness(1.08); }
+button.danger { border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); color: var(--bad); }
 select, input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]) {
-  background: #0f1217; border: 1px solid var(--line); border-radius: 5px; padding: 4px 8px; min-width: 0;
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--sw-radius-sm); padding: 4px 8px; min-width: 0;
 }
 input[type=number] { width: 90px; }
 label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--dim); }
 label.check { flex-direction: row; align-items: center; gap: 6px; color: var(--text); font-size: 13px; }
 label > input, label > select { color: var(--text); font-size: 13px; }
 
-.file-btn { position: relative; overflow: hidden; display: inline-flex; flex-direction: row; align-items: center; background: var(--panel-2);
-  border: 1px solid var(--line); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--text); }
+.file-btn { position: relative; overflow: hidden; display: inline-flex; flex-direction: row; align-items: center; background: var(--panel);
+  border: 1px solid var(--line); padding: 5px 12px; border-radius: var(--sw-radius-sm); cursor: pointer; font-size: 13px; color: var(--text); }
+.file-btn:hover { border-color: var(--accent); }
 .file-btn.small { padding: 2px 10px; font-size: 12px; }
 .file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 
-.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; min-width: 0; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--sw-radius); padding: 14px 16px; margin-bottom: 14px; min-width: 0; }
 .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
 @media (max-width: 1000px) { .cols { grid-template-columns: 1fr; } }
 
 .drop { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 260px;
-  border: 2px dashed var(--line); border-radius: 12px; cursor: pointer; position: relative; color: var(--text); font-size: 14px; text-align: center; padding: 20px; }
-.drop.over { border-color: var(--accent); background: #16202a; }
+  border: 2px dashed color-mix(in srgb, var(--dim) 45%, var(--line)); border-radius: 12px; cursor: pointer; position: relative;
+  color: var(--text); background: var(--panel); font-size: 14px; text-align: center; padding: 20px; }
+.drop.over { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--panel)); }
 .drop strong { font-size: 18px; }
 .drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 
 .project-bar { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; margin-bottom: 12px; }
 .tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
 .tabs button { background: var(--panel); color: var(--dim); padding: 7px 14px; font-weight: 550; display: inline-flex; align-items: center; gap: 6px; }
-.tabs button[aria-selected='true'] { background: var(--accent); border-color: var(--accent); color: #0d1117; }
+.tabs button[aria-selected='true'] { background: var(--accent); border-color: var(--accent); color: var(--sw-on-accent); }
 .tabs button.accent:not([aria-selected='true']) { color: var(--accent); }
 .tab-pair { display: inline-flex; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding-left: 8px; }
 .tab-pair.on { background: var(--accent); border-color: var(--accent); }
+.tab-pair.on input { accent-color: var(--sw-on-accent); }
 .tab-pair button { border: 0; }
 
 .tree, .order { list-style: none; padding: 0; margin: 8px 0; }
@@ -85,7 +107,7 @@ label > input, label > select { color: var(--text); font-size: 13px; }
 .order li { display: flex; gap: 10px; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--line); }
 
 .options .row.wrap { gap: 14px; }
-.preview-wrap { overflow: auto; max-height: 78vh; border-radius: 6px; }
+.preview-wrap { overflow: auto; max-height: 78vh; border-radius: var(--sw-radius-sm); }
 .preview { display: block; height: auto; }
 .problems { color: var(--bad); margin: 8px 0; padding-left: 20px; font-size: 13px; }
 .notes { color: var(--dim); font-size: 12px; margin-top: 10px; }
@@ -102,14 +124,16 @@ footer { margin-top: 30px; }
 .designer { display: grid; grid-template-columns: 240px minmax(0, 1fr) 280px; gap: 14px; align-items: start; outline: none; }
 .strip-list { display: flex; flex-direction: column; gap: 4px; }
 .strip-item { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 0; }
-.strip-item.active { border-color: var(--accent); background: #16202a; }
+.strip-item.active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--panel)); }
 .canvas-wrap { overflow: auto; position: relative; user-select: none; touch-action: none; margin: 10px 0; }
 .canvas-wrap svg { display: block; }
 .hit { fill: transparent; stroke: transparent; cursor: move; }
-.hit:hover { stroke: #5fb0d8; stroke-dasharray: 3 3; }
-.hit.sel { stroke: #5fb0d8; stroke-width: 2; fill: rgba(95, 176, 216, 0.08); }
-.handle { fill: #5fb0d8; cursor: nwse-resize; }
+/* Drawn over the R1 preview, which is dark in both modes, so these use the soft accent. */
+.hit:hover { stroke: var(--sw-accent-soft); stroke-dasharray: 3 3; }
+.hit.sel { stroke: var(--sw-accent-soft); stroke-width: 2; fill: color-mix(in srgb, var(--sw-accent-soft) 10%, transparent); }
+.handle { fill: var(--sw-accent-soft); cursor: nwse-resize; }
 .strip-handle { fill: #e0b050; }
+.strip-outline { stroke: var(--sw-accent-soft); }
 .palette { display: flex; flex-wrap: wrap; gap: 6px; }
 .inspector { display: flex; flex-direction: column; gap: 8px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

@@ -157,8 +157,8 @@ export function StripDesigner({ project, custom, onChange, selected, onSelect }:
         <div className="canvas-wrap" ref={svgWrap} onPointerMove={move} onPointerUp={end} onPointerDown={() => setSel(null)}>
           <Preview page={page} project={project} scale={scale}>
             <g transform={`translate(${pad} ${pad})`}>
-              <rect x={0} y={0} width={strip.w} height={stripHeight(strip, project)} fill="none"
-                stroke={strip.frame ? 'none' : '#5fb0d8'} strokeDasharray="4 4" />
+              <rect x={0} y={0} width={strip.w} height={stripHeight(strip, project)} fill="none" stroke="none"
+                className={strip.frame ? undefined : 'strip-outline'} strokeDasharray="4 4" />
               {strip.elements.map((e, i) => {
                 const kk = KINDS.find((x) => x.kind === e.kind)
                 const w = kk?.fixed ? kk.w : e.w, h = kk?.fixed ? kk.h : e.h
